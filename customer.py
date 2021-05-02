@@ -1,6 +1,8 @@
 from tkinter import*
 from PIL import Image, ImageTk
 from tkinter import ttk
+import random
+import mysql.connector
 
 
 class Customer_Window:
@@ -8,6 +10,25 @@ class Customer_Window:
         self.root = root
         self.root.title("Hotel Management System")
         self.root.geometry("1670x850+240+175")
+
+
+        # --------------Variables for Database-------------------
+        self.variable_ref = StringVar()
+        x = random.randint(1000,9999)
+        self.variable_ref.set(str(x))
+
+        self.variable_customer_name = StringVar()
+        self.variable_father_name = StringVar()
+        self.variable_gender = StringVar()
+        self.variable_dob = StringVar()
+        self.variable_address = StringVar()
+        self.variable_pincode = StringVar()
+        self.variable_nationality = StringVar()
+        self.variable_mobileNo = StringVar()
+        self.variable_email = StringVar()
+        self.variable_idProof = StringVar()
+        self.variable_idNo = StringVar()
+
 
 
         # ------------Title----------
@@ -25,7 +46,7 @@ class Customer_Window:
         customer_reference = Label(labelframeleft, text="Customer's Ref.", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_reference.grid(row=0, column=0, sticky=W)
 
-        entry_reference = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_reference = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_ref)
         entry_reference.grid(row=0, column=1)
 
 
@@ -33,7 +54,7 @@ class Customer_Window:
         customer_name = Label(labelframeleft, text="Customer's Name: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_name.grid(row=1, column=0, sticky=W)
 
-        entry_customer_name = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_customer_name = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_customer_name)
         entry_customer_name.grid(row=1, column=1)
 
  
@@ -41,7 +62,7 @@ class Customer_Window:
         customer_father_name = Label(labelframeleft, text="Father's Name: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_father_name.grid(row=2, column=0, sticky=W)
 
-        entry_father_name = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_father_name = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_father_name)
         entry_father_name.grid(row=2, column=1)
 
 
@@ -49,7 +70,7 @@ class Customer_Window:
         customer_gender = Label(labelframeleft, text="Gender: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_gender.grid(row=3, column=0, sticky=W)
 
-        combobox_gender = ttk.Combobox(labelframeleft, font=("arial", 12), width=33, state="readonly")
+        combobox_gender = ttk.Combobox(labelframeleft, font=("arial", 12), width=33, state="readonly", textvariable=self.variable_gender)
         combobox_gender["value"] = ("Male", "Female", "Others")
         combobox_gender.current(0)
         combobox_gender.grid(row=3, column=1)
@@ -59,7 +80,7 @@ class Customer_Window:
         customer_dob = Label(labelframeleft, text="Date of Birth: ", font=("arial", 12, "bold"), padx=0, pady=6)
         customer_dob.grid(row=4, column=0, sticky=W)
 
-        combobox_date = ttk.Combobox(labelframeleft, font=("arial", 12), width=5, state="readonly")
+        combobox_date = ttk.Combobox(labelframeleft, font=("arial", 12), width=5, state="readonly", textvariable=self.variable_dob)
         combobox_date["value"] = ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", 
                                 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", 
                                 "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31")
@@ -96,7 +117,7 @@ class Customer_Window:
         customer_address = Label(labelframeleft, text="Address: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_address.grid(row=5, column=0, sticky=W)
 
-        entry_address = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_address = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_address)
         entry_address.grid(row=5, column=1)
 
 
@@ -104,7 +125,7 @@ class Customer_Window:
         customer_pincode = Label(labelframeleft, text="Pin Code: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_pincode.grid(row=6, column=0, sticky=W)
 
-        entry_pincode = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_pincode = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_pincode)
         entry_pincode.grid(row=6, column=1)
 
 
@@ -112,7 +133,7 @@ class Customer_Window:
         customer_nationality = Label(labelframeleft, text="Nationality: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_nationality.grid(row=7, column=0, sticky=W)
 
-        entry_nationality = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_nationality = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_nationality)
         entry_nationality.grid(row=7, column=1)
 
 
@@ -120,7 +141,7 @@ class Customer_Window:
         customer_mobile_number = Label(labelframeleft, text="Mobile No.: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_mobile_number.grid(row=8, column=0, sticky=W)
 
-        entry_mobile_number = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_mobile_number = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_mobileNo)
         entry_mobile_number.grid(row=8, column=1)
 
 
@@ -128,7 +149,7 @@ class Customer_Window:
         customer_email = Label(labelframeleft, text="Email Id.: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_email.grid(row=9, column=0, sticky=W)
 
-        entry_email = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_email = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_email)
         entry_email.grid(row=9, column=1)
 
 
@@ -136,7 +157,7 @@ class Customer_Window:
         customer_id_proof = Label(labelframeleft, text="Id. Proof: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_id_proof.grid(row=10, column=0, sticky=W)
 
-        combobox_id_proof = ttk.Combobox(labelframeleft, font=("arial", 12), width=33, state="readonly")
+        combobox_id_proof = ttk.Combobox(labelframeleft, font=("arial", 12), width=33, state="readonly", textvariable=self.variable_idProof)
         combobox_id_proof["value"] = ("Passport", "Aadhaar Card", "Voter Id.", "Driving Lisence", "Others")
         combobox_id_proof.current(0)
         combobox_id_proof.grid(row=10, column=1)
@@ -146,7 +167,7 @@ class Customer_Window:
         customer_id_number = Label(labelframeleft, text="Id. Number: ", font=("arial", 12, "bold"), padx=2, pady=6)
         customer_id_number.grid(row=11, column=0, sticky=W)
 
-        entry_id_number = ttk.Entry(labelframeleft, width=35, font=("arial", 13))
+        entry_id_number = ttk.Entry(labelframeleft, width=35, font=("arial", 13), textvariable=self.variable_idNo)
         entry_id_number.grid(row=11, column=1)
 
 
@@ -201,7 +222,7 @@ class Customer_Window:
         scroll_x = ttk.Scrollbar(data_table, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(data_table, orient=VERTICAL)
 
-        self.customer_data_table = ttk.Treeview(data_table, column=("reference", "name", "father's_Name", "gender", "dob", "add", "pincode", "nationality", 
+        self.customer_data_table = ttk.Treeview(data_table, column=("reference", "name", "father's_Name", "gender", "dob", "address", "pincode", "nationality", 
                                                                      "mobileNo", "email", "idproof", "idno"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -215,7 +236,7 @@ class Customer_Window:
         self.customer_data_table.heading("father's_Name", text="Father's Name")
         self.customer_data_table.heading("gender", text="Gender")
         self.customer_data_table.heading("dob", text="Date of Birth")
-        self.customer_data_table.heading("add", text="Address")
+        self.customer_data_table.heading("address", text="Address")
         self.customer_data_table.heading("pincode", text="Pin Code")
         self.customer_data_table.heading("nationality", text="Nationality")
         self.customer_data_table.heading("mobileNo", text="Mobile No.")
@@ -231,7 +252,7 @@ class Customer_Window:
         self.customer_data_table.column("father's_Name", width=120)
         self.customer_data_table.column("gender", width=120)
         self.customer_data_table.column("dob", width=120)
-        self.customer_data_table.column("add", width=120)
+        self.customer_data_table.column("address", width=120)
         self.customer_data_table.column("pincode", width=120)
         self.customer_data_table.column("nationality", width=120)
         self.customer_data_table.column("mobileNo", width=120)
@@ -240,6 +261,11 @@ class Customer_Window:
         self.customer_data_table.column("idno", width=120)
 
         self.customer_data_table.pack(fill=BOTH, expand=1)
+
+
+    # def add_data(self):
+
+
 
 
 
